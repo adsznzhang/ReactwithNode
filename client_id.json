@@ -1,0 +1,12 @@
+{"web":{
+
+    "client_id":"245954508272-4pe5vcak2v121a6nhk1m3svkecvoj068.apps.googleusercontent.com",
+
+    "project_id":"emaily-dev-191408",
+        "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+        "token_uri":"https://accounts.google.com/o/oauth2/token",
+        "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret":"XyX8hQLfBPoKFPh1Iw3myNCK",
+        "redirect_uris":["http://localhost:5000/*"],
+        "javascript_origins":["http://localhost:5000"]}
+}
