@@ -7,7 +7,7 @@ const authRoutes = require('./routes/authRoutes.js');
 require('./models/User.js');
 require('./services/passport.js');
 
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI,{ useMongoClient: true });
 
 const app = express();
 
