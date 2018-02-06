@@ -23,6 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 authRoutes(app);
+require('./routes/billingRoutes.js')(app);
 
 // app.get('/', (req, res) => {
 //     res.send({hi: 'there'});
