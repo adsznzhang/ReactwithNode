@@ -14,6 +14,10 @@ class Header extends Component{
         //react16才能正常运行
         return [
           <li key="1"><Payments/></li>,
+          //credits能够实时刷新的原因是，Payments后端的API会更新整个user下的数据
+          <li key="3" style={{margin: '0 10px'}}>
+            Credits:{this.props.auth.credits}
+          </li>,
           <li key="2"><a href="/api/logout">Logout</a></li>
         ];
     }

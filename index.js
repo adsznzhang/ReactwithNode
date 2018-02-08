@@ -11,7 +11,7 @@ require('./services/passport.js');
 mongoose.connect(keys.mongoURI,{ useMongoClient: true });
 
 const app = express();
-
+//app.use()把中间程序传递到每一个路由
 app.use(bodyParser.json());
 
 app.use(
