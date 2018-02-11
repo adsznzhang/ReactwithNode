@@ -36,13 +36,13 @@ if(process.env.NODE_ENV === 'production') {
     //express will serve up production assets
     //like our main.js file, or main.css file
     //如果有任何来自前端的路由在后端没有找到，那么就去这个文件下去找~
-    app.use(express.static(path.join('client','build')));
+    app.use(express.static(path.join(__dirname,'client','build')));
 
 
     //Express will serve up the index.html file
     //if it doesn't recognize the route
     //相当于最后一道防线，如果前面两者都没发现，就把index.html发送
-    app.get('/*',(req, res) => {
+    app.get('*',(req, res) => {
         res.sendFile(path.resolve(__dirname, 'client','build','index.html'));
     });
 };
