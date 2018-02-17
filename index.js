@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const keys = require('./config/keys.js');
 const authRoutes = require('./routes/authRoutes.js');
 require('./models/User.js');
+require('./models/Survey.js');
 require('./services/passport.js');
 
 mongoose.connect(keys.mongoURI,{ useMongoClient: true });
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 authRoutes(app);
 require('./routes/billingRoutes.js')(app);
+require('./routes/surveyRoutes.js')(app);
 
 // app.get('/', (req, res) => {
 //     res.send({hi: 'there'});
