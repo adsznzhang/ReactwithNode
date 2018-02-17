@@ -44,7 +44,7 @@ class Mailer extends helper.Mail{
         const trackingSettings = new helper.TrackingSettings();
         const clickTracking = new helper.ClickTracking(true,true);
         trackingSettings.setClickTracking(clickTracking);
-        this.addClickTrackingSettings(trackingSettings);
+        this.addTrackingSettings(trackingSettings);
     }
 
     async send() {
@@ -55,7 +55,7 @@ class Mailer extends helper.Mail{
         });
 
         //调用sgApi下的函数API发送给sendgrid！
-       const response =  this.sgApi.API(request);
+       const response =  await this.sgApi.API(request);
         return response;
     }
 

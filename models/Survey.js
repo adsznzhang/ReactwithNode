@@ -12,7 +12,7 @@ const surveySchema = new Schema({
     yes: {type: Number, default: 0},
     no: {type: Number, default: 0},
     //每一个Schema存储到数据库都会有一个唯一的ObjectID，然后这个Schema的名字是User
-    _user: {type: Schema.Type.ObjectID, ref: 'User'},
+    _user: {type: Schema.Types.ObjectId, ref: 'User'},
     dateSent: Date,
     //调查发送的时间和最后一次接受到回应的时间
     lastResponded: Date

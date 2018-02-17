@@ -10,7 +10,12 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate.js');
 const Survey = mongoose.model('surveys');
 
 module.exports = app => {
-    app.post('/api/surveys', requireLogin,requireCredits,(req, res) => {
+
+    app.get('/api/surveys/thanks',(req, res) => {
+        res.send('Thanks for your feedback');
+    });
+
+    app.post('/api/surveys', requireLogin,requireCredits,async (req, res) => {
         //前端负责把这些数据传递过来！
         const {title, subject, body, recipients} =  req.body;
         const survey = new Survey({
@@ -27,5 +32,17 @@ module.exports = app => {
         //greate place to send an email!
         //surveyTemplate作用是把前端传入的数据渲染成HTML格式
         const mailer = new Mailer(survey, surveyTemplate(survey));
+        try {
+            await mailer.send();
+            await survey.save();
+            //用户余额也要减少
+            req.user.credits -= 1;
+            const user = await req.user.save();
+
+
+            res.send(user);
+        } catch(err){
+            res.status(422).send(err);
+        }
     });
 };
