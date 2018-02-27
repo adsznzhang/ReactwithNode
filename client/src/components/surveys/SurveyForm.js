@@ -6,6 +6,7 @@ import { reduxForm, Field } from 'redux-form';
 import SurveyField from './SurveyField.js';
 // 用第三方库lodash来帮助迭代
 import _ from 'lodash';
+import { Link} from 'react-router-dom';
 
 
 const FIELDS = [
@@ -24,7 +25,6 @@ class SurveyForm extends Component{
       return (<Field key={name} component={SurveyField} type="text" label={label} name={name} />);
     });
 
-
     /* return (
      *   //redux-form的Field组件可以来渲染我们自己创建的组件SurveyField,然后把Feild里面的方法对象也传递给这个组件
      *   <div>
@@ -42,15 +42,28 @@ class SurveyForm extends Component{
       <div>
         <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
           {this.renderFields()}
-          <button type="submit">Submit</button>
+          <Link to="/surveys" className="red btn-flat white-text">Cancel</Link>
+          <button className="teal btn-flat right white-text" type="submit">Next
+            <i className="material-icons right">done</i>
+          </button>
         </form>
       </div>
     )
   }
 }
 
+function validate(values){
+  const errors = {};
+
+  if(!values.title) {
+    errors.title = 'You must provide a title';
+  }
+
+  return errors;
+};
 
 //把 SurveyForm传递给reduxForm
 export default reduxForm({
+  validate: validate,
   form: 'surveyForm'
 })(SurveyForm);

@@ -8,7 +8,6 @@ import React from 'react';
 //console.log(input)
 //}来把整个input对象传递给这个函数
 export default ({input, label}) => {
-    console.log(input);
   return (
     //...input作用是onBlur={input.onBlur} onFocus={input.onFocus}...
     <div>
