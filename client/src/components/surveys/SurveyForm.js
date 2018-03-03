@@ -22,6 +22,7 @@ class SurveyForm extends Component{
   //让组件变得简洁，把field做成函数
   renderFields() {
     return _.map(FIELDS, ({label, name}) => {
+    //reduxForm会把error传递给component
       return (<Field key={name} component={SurveyField} type="text" label={label} name={name} />);
     });
 
