@@ -7,6 +7,7 @@ import SurveyField from './SurveyField.js';
 // 用第三方库lodash来帮助迭代
 import _ from 'lodash';
 import { Link} from 'react-router-dom';
+import validateEmails from '../../utils/validateEmails.js';
 
 
 const FIELDS = [
@@ -40,8 +41,9 @@ class SurveyForm extends Component{
   render(){
     return (
       // name属性可以是任何,component属性告诉redux-form这是一个类似<input />的HTML标记
+      //这个地方为什么不传递onSurveySubmit()，而是传递的函数呢
       <div>
-        <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+        <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
           {this.renderFields()}
           <Link to="/surveys" className="red btn-flat white-text">Cancel</Link>
           <button className="teal btn-flat right white-text" type="submit">Next
@@ -55,10 +57,15 @@ class SurveyForm extends Component{
 
 function validate(values){
   const errors = {};
+  //把这句验证放在前面可以避免对下面的 是否有邮件地址进行验证
+  errors.emails = validateEmails(values.emails || '');
+  
+  _.each(FIELDS, ({name}) => {
+    if(!values[name]){
+      errors[name] = 'You must provide a value';
+    }
+  });
 
-  if(!values.title) {
-    errors.title = 'You must provide a title';
-  }
 
   return errors;
 };
@@ -66,5 +73,8 @@ function validate(values){
 //把 SurveyForm传递给reduxForm
 export default reduxForm({
   validate: validate,
-  form: 'surveyForm'
+  //这个地方的表单名字是为了区分不同表单，表单下的所有属性都在各自的表单名字下
+  form: 'surveyForm',
+  //在再次渲染表单组件的时候，保留上次所填写信息
+  destroyOnUnmount: false
 })(SurveyForm);
