@@ -2,6 +2,7 @@
 import React, { Component} from 'react';
 import SurveyForm from './SurveyForm.js';
 import SurveyFormReview from './SurveyFormReview.js';
+import {reduxForm} from 'redux-form';
 
 class SurveyNew extends Component{
     //经典的组件状态初始化
@@ -15,9 +16,9 @@ class SurveyNew extends Component{
 
   renderContent() {
     if (this.state.showFormReview === true){
-      return <SurveyFormReview onCancel={() => this.setState({showFormReview: false})}/>
+        return <SurveyFormReview onCancel={() => this.setState({showFormReview: false})}/>;
     }
-    return <SurveyForm onSurveySubmit={() => this.setState({showFormReview: true})}/>
+      return <SurveyForm onSurveySubmit={() => this.setState({showFormReview: true})}/>;
   }
 
     render(){
@@ -29,4 +30,6 @@ class SurveyNew extends Component{
     }
 }
 
-export default SurveyNew;
+export default reduxForm(
+  {form:'surveyForm'}
+)( SurveyNew );

@@ -1,19 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import FIELDS from './formFields.js';
+import _ from 'lodash';
+import * as actions from '../../actions';
 
-const SurveyFormReview = ({onCancel, formValues}) => {
-  return (
-    <div>
-      <h5>Plese confirm your entries</h5>
-      <div>
+//submitSurvey作为属性传递给组件
+const SurveyFormReview = ({onCancel, formValues, submitSurvey}) => {
+
+  const reviewFields = _.map(FIELDS, ({name, label}) => {
+    return (
+      <div key={name}>
+        <label >{label}</label>
         <div>
-          <label >Survey Title</label>
-          <div>
-            {formValues.title}
-          </div>
+          {formValues[name]}
         </div>
       </div>
-      <button className="yellow darken-3 btn-flat" onClick={onCancel}>Back</button>
+    );
+  })
+
+  return (
+    //为了防止submitSurvey直接执行，我们用箭头函数进行返回
+    <div>
+      <h5>Plese confirm your entries</h5>
+      {reviewFields}
+      <button className="yellow white-text darken-2 btn-flat" onClick={onCancel}>Back</button>
+      <button onClick={() => submitSurvey(formValues)} className="green btn-flat right white-text">
+        Send Survey
+        <i className="material-icons right">email</i>
+      </button>
     </div>
   );
 }
@@ -26,4 +40,4 @@ function mapStateToProps(state){
   }
 };
 
-export default connect(mapStateToProps)(SurveyFormReview);
+export default connect(mapStateToProps, actions)(SurveyFormReview);
