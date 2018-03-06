@@ -26,7 +26,7 @@ class SurveyForm extends Component{
      *     <Field label="Survey Title" type="text" name="title" component={SurveyField} />
      *     <Field label="Subject Line" type="text" name="subject" component={SurveyField} />
      *     <Field label="Email Body" type="text" name="body" component={SurveyField} />
-     *     <Field label="Recipient List" type="text" name="emails" component={SurveyField} />
+     *     <Field label="Recipient List" type="text" name="recipients" component={SurveyField} />
      *   </div>
      * )*/
   }
@@ -51,7 +51,7 @@ class SurveyForm extends Component{
 function validate(values){
   const errors = {};
   //把这句验证放在前面可以避免对下面的 是否有邮件地址进行验证
-  errors.emails = validateEmails(values.emails || '');
+  errors.recipients = validateEmails(values.recipients || '');
   
   _.each(FIELDS, ({name}) => {
     if(!values[name]){

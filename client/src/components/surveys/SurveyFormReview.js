@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import FIELDS from './formFields.js';
 import _ from 'lodash';
 import * as actions from '../../actions';
+//让组件知道React Router
+import {withRouter} from 'react-router-dom';
 
 //submitSurvey作为属性传递给组件
-const SurveyFormReview = ({onCancel, formValues, submitSurvey}) => {
+const SurveyFormReview = ({onCancel, formValues, submitSurvey,history}) => {
 
   const reviewFields = _.map(FIELDS, ({name, label}) => {
     return (
@@ -24,7 +26,7 @@ const SurveyFormReview = ({onCancel, formValues, submitSurvey}) => {
       <h5>Plese confirm your entries</h5>
       {reviewFields}
       <button className="yellow white-text darken-2 btn-flat" onClick={onCancel}>Back</button>
-      <button onClick={() => submitSurvey(formValues)} className="green btn-flat right white-text">
+      <button onClick={() => submitSurvey(formValues,history)} className="green btn-flat right white-text">
         Send Survey
         <i className="material-icons right">email</i>
       </button>
@@ -40,4 +42,4 @@ function mapStateToProps(state){
   }
 };
 
-export default connect(mapStateToProps, actions)(SurveyFormReview);
+export default connect(mapStateToProps, actions)(withRouter (SurveyFormReview));
