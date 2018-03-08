@@ -12,8 +12,9 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "server": "nodemon index.js",
         "client": "npm run start --prefix client",
-        "dev": "concurrently \"npm run server\" \"npm run client\"",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+        "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+        "webhook": "forever sendgrid_webhooks.js" 
     },
     "author": "",
     "license": "ISC",
@@ -22,6 +23,7 @@
         "concurrently": "^3.5.1",
         "cookie-session": "^2.0.0-beta.3",
         "express": "^4.16.2",
+        "localtunnel": "^1.8.3",
         "mongoose": "^4.13.9",
         "nodemon": "^1.14.9",
         "passport": "^0.4.0",
@@ -29,5 +31,8 @@
         "react-stripe-checkout": "^2.6.3",
         "sendgrid": "^5.2.3",
         "stripe": "^5.4.0"
+    },
+    "devDependencies": {
+        "forever": "^0.15.3"
     }
 }
