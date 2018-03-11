@@ -1,3 +1,7 @@
+const _ = require('lodash');
+const Path = require('path-parser');
+//rul 库是NODE的内建库
+const {URL} = require('url');
 const mongoose = require('mongoose');
 
 const requireLogin = require('../middlewares/requireLogin.js');
@@ -16,8 +20,12 @@ module.exports = app => {
     });
 
     app.post('/api/surveys/webhooks',(req,res) => {
-        console.log(req.body);
-        res.send({});
+        const events = _.map(req.body, (event) => {
+            const pathname = new URL(event.url).pathname;
+            //建立一个检测模板
+            const p = new Path('/api/surveys:surveyId/:choice');
+            p.test(pathname);
+        });
     });
 
     app.post('/api/surveys', requireLogin,requireCredits,async (req, res) => {
