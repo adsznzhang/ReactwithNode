@@ -20,12 +20,35 @@ module.exports = app => {
     });
 
     app.post('/api/surveys/webhooks',(req,res) => {
+        //建立一个检测模板
+        const p = new Path('/api/surveys:surveyId/:choice');
+        //我们只想获取对象里面的email和url,({email,url})
         const events = _.map(req.body, (event) => {
             const pathname = new URL(event.url).pathname;
-            //建立一个检测模板
-            const p = new Path('/api/surveys:surveyId/:choice');
-            p.test(pathname);
+            const match = p.test(pathname);
+            if(match){
+                return {email:event.email, surveyId:match.surveyId, choice:match.email};
+            }
         });
+
+
+        //移除数组中的undifined；
+        const compactEvents = _.compact(events);
+        //只收集用户点击一次
+        const uniqueEvents = _.uniqBy(compactEvents, 'email','surveyId');
+        //lodash 里有advanced chain
+      /* const events = _.chain(req.body)
+       *                 .map(({email,url}) => {
+       *                   const match = p.test(new URL(url),pathname);
+       *                   if(match){
+       *                     return {email, surveyId:match.surveyId, choice:match.choice};
+       *                   }
+       *                 })
+       *                 .compact()
+       *                 .uniqBy('email','surveyId')
+       *                 .value();
+       */
+        res.send({});
     });
 
     app.post('/api/surveys', requireLogin,requireCredits,async (req, res) => {
